@@ -10,13 +10,13 @@ SystemMaxUse=16M
 pub const BASE_PACKAGES: [&str; 9] = [
     "base",
     "linux54",
+    "linux54-broadcom-wl",
     "linux-firmware",
     "grub",
     "efibootmgr",
     "intel-ucode",
-    "networkmanager",
-    "broadcom-wl",
     "amd-ucode",
+    "networkmanager",
 ];
 
 // we add go so that it is cached when installing yay
