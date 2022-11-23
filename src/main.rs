@@ -162,12 +162,14 @@ fn create(command: args::CreateCommand) -> anyhow::Result<()> {
     info!("Partitioning the block device");
     debug!("{:?}", disk_path);
 
+    let boot_size = command.boot_size.unwrap_or(300);
+
     sgdisk
         .execute()
         .args(&[
             "-Z",
             "-o",
-            "--new=1::+250M",
+            &format!("--new=1::+{}M", boot_size),
             "--new=2::+1M",
             "--largest-new=3",
             "--typecode=1:EF00",
@@ -186,7 +188,7 @@ fn create(command: args::CreateCommand) -> anyhow::Result<()> {
     let root_partition_base = storage_device.get_partition(constants::ROOT_PARTITION_INDEX)?;
     let encrypted_root = if let Some(cryptsetup) = &cryptsetup {
         info!("Encrypting the root filesystem");
-        EncryptedDevice::prepare(&cryptsetup, &root_partition_base)?;
+        EncryptedDevice::prepare(cryptsetup, &root_partition_base)?;
         Some(EncryptedDevice::open(
             cryptsetup,
             &root_partition_base,

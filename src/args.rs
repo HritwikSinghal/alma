@@ -52,6 +52,10 @@ pub struct CreateCommand {
     #[structopt(long = "aur-packages", value_name = "aurpackage")]
     pub aur_packages: Vec<String>,
 
+    /// Boot partition size in megabytes
+    #[structopt(long = "boot-size")]
+    pub boot_size: Option<u32>,
+
     /// Enter interactive chroot before unmounting the drive
     #[structopt(short = "i", long = "interactive")]
     pub interactive: bool,
@@ -84,7 +88,7 @@ pub struct CreateCommand {
     #[structopt(long = "allow-non-removable")]
     pub allow_non_removable: bool,
 
-    #[structopt(long = "aur-helper", possible_values=&["yay"], default_value="yay")]
+    #[structopt(long = "aur-helper", possible_values=&["paru", "yay"], default_value="yay")]
     pub aur_helper: AurHelper,
 }
 

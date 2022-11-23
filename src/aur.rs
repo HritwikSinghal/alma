@@ -12,7 +12,26 @@ impl FromStr for AurHelper {
 
     fn from_str(s: &str) -> anyhow::Result<Self> {
         match s {
-            "yay" => Ok(AurHelper {
+            "paru" => Ok(Self {
+                name: String::from("paru"),
+                package_name: String::from("paru-bin"),
+                install_command: vec![
+                    String::from("paru"),
+                    String::from("-S"),
+                    String::from("--skipreview"),
+                    String::from("--noupgrademenu"),
+                    String::from("--useask"),
+                    String::from("--removemake"),
+                    String::from("--norebuild"),
+                    String::from("--nocleanafter"),
+                    String::from("--noredownload"),
+                    String::from("--mflags"),
+                    String::from(""),
+                    String::from("--noconfirm"),
+                    String::from("--batchinstall"),
+                ],
+            }),
+            "yay" => Ok(Self {
                 name: String::from("yay"),
                 package_name: String::from("yay-bin"),
                 install_command: vec![
@@ -25,7 +44,6 @@ impl FromStr for AurHelper {
                     String::from("--useask"),
                     String::from("--removemake"),
                     String::from("--norebuild"),
-                    String::from("--noconfirm"),
                     String::from("--answeredit"),
                     String::from("None"),
                     String::from("--answerclean"),
